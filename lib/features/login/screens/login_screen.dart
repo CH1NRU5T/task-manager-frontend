@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager_app/constants/extensions/extension.dart';
 import 'package:task_manager_app/constants/widgets/custom_text_form_field.dart';
+import 'package:task_manager_app/features/login/services/login_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,10 +13,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late TextEditingController _usernameController;
+  late LoginService _loginService;
   @override
   void initState() {
     super.initState();
     _usernameController = TextEditingController();
+    _loginService = LoginService();
   }
 
   @override
@@ -40,7 +43,9 @@ class _LoginScreenState extends State<LoginScreen> {
             20.height,
             TextButton(
               child: const Text('Login'),
-              onPressed: () {},
+              onPressed: () {
+                _loginService.login(_usernameController.text);
+              },
             )
           ],
         ),
