@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_manager_app/constants/constants.dart';
 import 'package:task_manager_app/constants/extensions/extension.dart';
 import 'package:task_manager_app/constants/services/api.dart';
 import 'package:task_manager_app/models/task.dart';
+import 'package:task_manager_app/providers/task_provider.dart';
 
 class HomeService {
-  Future<List<Task>?> getAllTasks(String username, BuildContext context) async {
+  getAllTasks(String username, BuildContext context) async {
     (String?, dynamic) response =
         await getRequest('$baseUrl/getAllTasks/$username');
     if (response.$1 == null) {
@@ -18,7 +20,7 @@ class HomeService {
           map.addAll({'counter': counter++});
           return Task.fromMap(map);
         }).toList();
-        return tasks;
+        context.read<TaskProvider>().tasks = tasks;
       }
     } else {
       // if response.$1 (error) is not null, then we have an error
@@ -26,6 +28,5 @@ class HomeService {
         context.showSnackBar(response.$1!);
       }
     }
-    return null;
   }
 }

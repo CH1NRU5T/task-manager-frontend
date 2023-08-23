@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager_app/features/login/screens/login_screen.dart';
+import 'package:task_manager_app/providers/task_provider.dart';
 import 'package:task_manager_app/providers/user_provider.dart';
 import 'package:task_manager_app/router.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => UserProvider()),
+    ChangeNotifierProvider(create: (_) => TaskProvider()),
   ], child: const MyApp()));
 }
 

@@ -4,6 +4,7 @@ import 'package:task_manager_app/constants/extensions/extension.dart';
 import 'package:task_manager_app/constants/widgets/task_container.dart';
 import 'package:task_manager_app/features/home/services/home_service.dart';
 import 'package:task_manager_app/models/task.dart';
+import 'package:task_manager_app/providers/task_provider.dart';
 import 'package:task_manager_app/providers/user_provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late TaskProvider provider;
   late List<Task> _tasks = [];
 
   List<Task> getTasks(int zerone) {
@@ -29,16 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _getTasksFromApi() {
-    HomeService()
-        .getAllTasks(context.read<UserProvider>().username, context)
-        .then((value) {
-      if (value != null) {
-        setState(() {
-          _tasks = value;
-        });
-      }
-    });
+  void _getTasksFromApi() async {
+    await HomeService()
+        .getAllTasks(context.read<UserProvider>().username, context);
   }
 
   @override
@@ -48,48 +43,53 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    provider = context.watch<TaskProvider>();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _tasks = provider.tasks;
     List<Task> oddTasks = getTasks(0);
     List<Task> evenTasks = getTasks(1);
-
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _getTasksFromApi();
+          },
+          child: const Icon(Icons.add),
+        ),
         body: RefreshIndicator(
           onRefresh: () async {
-            List<Task>? tasks = await HomeService()
+            await HomeService()
                 .getAllTasks(context.read<UserProvider>().username, context);
-            if (tasks != null) {
-              setState(() {
-                _tasks = tasks;
-              });
-            }
           },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: Column(
-                      children: oddTasks.map((e) {
-                        return TaskContainer(
-                          title: e.title,
-                          description: e.description,
-                        );
-                      }).toList(),
+                      children: oddTasks.map(
+                        (e) {
+                          return TaskContainer(task: e);
+                        },
+                      ).toList(),
                     ),
                   ),
                   10.width,
                   Expanded(
                     child: Column(
-                      children: evenTasks.map((e) {
-                        return TaskContainer(
-                          title: e.title,
-                          description: e.description,
-                        );
-                      }).toList(),
+                      children: evenTasks.map(
+                        (e) {
+                          return TaskContainer(task: e);
+                        },
+                      ).toList(),
                     ),
                   ),
                 ],
