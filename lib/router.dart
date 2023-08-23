@@ -6,11 +6,13 @@ generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case HomeScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
+        builder: (context) => HomeScreen(),
+        settings: settings,
       );
     default:
       return MaterialPageRoute(
         builder: (context) => const LoginScreen(),
+        settings: settings,
       );
   }
 }
