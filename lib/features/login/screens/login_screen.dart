@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
             TextButton(
               child: const Text('Login'),
               onPressed: () {
-                _loginService.login(_usernameController.text);
+                _loginService.login(_usernameController.text, context);
               },
             )
           ],
