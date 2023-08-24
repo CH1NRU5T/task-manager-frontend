@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_app/constants/constants.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField(
@@ -8,9 +9,19 @@ class CustomTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Username Cannot be empty';
+        }
+        return null;
+      },
       controller: controller,
+      style: TextStyle(color: textColor),
       decoration: InputDecoration(
-        label: Text(label),
+        label: Text(
+          label,
+          style: TextStyle(color: textColor),
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),

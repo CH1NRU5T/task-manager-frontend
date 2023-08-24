@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_app/constants/constants.dart';
 import 'package:task_manager_app/features/task/screens/task_screen.dart';
 import 'package:task_manager_app/models/task.dart';
 
@@ -29,8 +30,10 @@ class TaskContainer extends StatelessWidget {
             if (task.title.isNotEmpty)
               Text(
                 task.title,
-                style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: textColor),
               ),
             const Divider(
               color: Colors.transparent,
@@ -38,7 +41,7 @@ class TaskContainer extends StatelessWidget {
             if (task.description.isNotEmpty)
               Text(
                 task.description,
-                style: const TextStyle(fontSize: 15),
+                style: TextStyle(fontSize: 15, color: textColor),
               ),
           ],
         ),

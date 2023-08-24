@@ -1,4 +1,10 @@
+import 'dart:ui';
+
 const String baseUrl = 'http://192.168.1.15:3000';
+Color backgroundColor = const Color(0xff211b1a);
+Color fabColor = const Color(0xff372b2c);
+Color textColor = const Color(0xffece1e0);
+
 List<String> emptyStrings = [
   "No tasks, no worries! Time to catch some digital dust bunnies.",
   "Task list empty, but the opportunity list is endless!",

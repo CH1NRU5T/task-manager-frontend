@@ -6,6 +6,7 @@ import 'package:task_manager_app/constants/constants.dart';
 import 'package:task_manager_app/constants/extensions/extension.dart';
 import 'package:task_manager_app/constants/widgets/task_container.dart';
 import 'package:task_manager_app/features/home/services/home_service.dart';
+import 'package:task_manager_app/features/login/screens/login_screen.dart';
 import 'package:task_manager_app/features/task/screens/task_screen.dart';
 import 'package:task_manager_app/models/task.dart';
 import 'package:task_manager_app/providers/task_provider.dart';
@@ -62,6 +63,11 @@ class _HomeScreenState extends State<HomeScreen> {
     provider = context.watch<TaskProvider>();
   }
 
+  _logout() {
+    context.read<UserProvider>().logout();
+    Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+  }
+
   @override
   Widget build(BuildContext context) {
     _tasks = provider.tasks;
@@ -69,7 +75,23 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Task> evenTasks = getTasks(1);
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Tasks'),
+          backgroundColor: Colors.transparent,
+          actions: [
+            IconButton(
+              tooltip: 'Logout',
+              icon: const Icon(
+                Icons.logout_rounded,
+                // color: Colors.black,
+              ),
+              onPressed: _logout,
+            ),
+          ],
+        ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: fabColor,
+          foregroundColor: Colors.white,
           onPressed: () {
             _createTask();
           },
@@ -85,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     emptyStrings[Random().nextInt(emptyStrings.length)],
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: textColor,
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
@@ -94,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
               : Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                     child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

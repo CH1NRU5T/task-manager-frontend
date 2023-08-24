@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_app/constants/constants.dart';
 import 'package:task_manager_app/constants/extensions/extension.dart';
 import 'package:task_manager_app/constants/widgets/custom_text_form_field.dart';
 import 'package:task_manager_app/features/login/services/login_service.dart';
@@ -12,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   late TextEditingController _usernameController;
   late LoginService _loginService;
   @override
@@ -32,22 +34,31 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomTextFormField(
-              controller: _usernameController,
-              label: 'Enter your Username',
-            ),
-            20.height,
-            TextButton(
-              child: const Text('Login'),
-              onPressed: () {
-                _loginService.login(_usernameController.text, context);
-              },
-            )
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomTextFormField(
+                controller: _usernameController,
+                label: 'Enter your Username',
+              ),
+              20.height,
+              TextButton(
+                style: TextButton.styleFrom(backgroundColor: fabColor),
+                child: Text(
+                  'Login',
+                  style: TextStyle(color: textColor),
+                ),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _loginService.login(_usernameController.text, context);
+                  }
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

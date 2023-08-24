@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:task_manager_app/constants/constants.dart';
 import 'package:task_manager_app/constants/widgets/task_text_form_field.dart';
 import 'package:task_manager_app/features/task/services/task_service.dart';
 import 'package:task_manager_app/models/task.dart';
@@ -61,12 +62,14 @@ class _TaskScreenState extends State<TaskScreen> {
       child: Scaffold(
         bottomSheet: widget.task.updatedAt != null
             ? Container(
-                color: Colors.red,
+                color: fabColor,
                 width: double.infinity,
                 height: 50,
                 child: Center(
                   child: Text(
-                      'Edited ${DateFormat('MMM dd').format(DateTime.parse(widget.task.updatedAt!))}'),
+                    'Edited ${DateFormat('MMM dd').format(DateTime.parse(widget.task.updatedAt!))}',
+                    style: TextStyle(color: textColor),
+                  ),
                 ),
               )
             : const SizedBox(),
@@ -74,17 +77,19 @@ class _TaskScreenState extends State<TaskScreen> {
           backgroundColor: Colors.transparent,
           actions: [
             IconButton(
+              tooltip: 'Save',
               icon: const Icon(
                 Icons.save_rounded,
-                color: Colors.black,
+                // color: Colors.black,
               ),
               onPressed: _save,
             ),
             if (widget.task.id.isNotEmpty)
               IconButton(
+                tooltip: 'Delete',
                 icon: const Icon(
                   Icons.delete_rounded,
-                  color: Colors.black,
+                  // color: Colors.black,
                 ),
                 onPressed: _delete,
               ),
