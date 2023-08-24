@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:task_manager_app/constants/widgets/task_text_form_field.dart';
 import 'package:task_manager_app/features/task/services/task_service.dart';
 import 'package:task_manager_app/models/task.dart';
@@ -51,6 +52,17 @@ class _TaskScreenState extends State<TaskScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        bottomSheet: widget.task.updatedAt != null
+            ? Container(
+                color: Colors.red,
+                width: double.infinity,
+                height: 50,
+                child: Center(
+                  child: Text(
+                      'Edited ${DateFormat('MMM dd').format(DateTime.parse(widget.task.updatedAt!))}'),
+                ),
+              )
+            : const SizedBox(),
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           actions: [
