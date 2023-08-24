@@ -15,8 +15,8 @@ generateRoute(RouteSettings settings) {
           settings.arguments as Map<String, dynamic>;
       return MaterialPageRoute(
         builder: (context) => TaskScreen(
-            title: taskArgs['title'] as String,
-            description: taskArgs['description'] as String),
+          task: taskArgs['task'],
+        ),
         settings: settings,
       );
     default:

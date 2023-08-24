@@ -12,8 +12,7 @@ class TaskContainer extends StatelessWidget {
         Navigator.of(context).pushNamed(
           TaskScreen.routeName,
           arguments: {
-            'title': task.title,
-            'description': task.description,
+            'task': task,
           },
         );
       },
