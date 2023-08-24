@@ -54,7 +54,7 @@ class TaskService {
   }
 
   updateTask(BuildContext context, String id, String newTitle,
-      String newDescription) async {
+      String newDescription, bool notify) async {
     Map<String, dynamic> body = {
       'username': context.read<UserProvider>().username,
       'id': id,
@@ -66,7 +66,9 @@ class TaskService {
     if (response.$1 == null) {
       if (context.mounted) {
         context.read<TaskProvider>().updateTask(id, newTitle, newDescription);
-        context.showSnackBar('Task updated successfully');
+        if (notify) {
+          context.showSnackBar('Task updated successfully');
+        }
       }
     } else {
       if (context.mounted) {

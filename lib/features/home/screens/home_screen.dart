@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:task_manager_app/constants/constants.dart';
 import 'package:task_manager_app/constants/extensions/extension.dart';
 import 'package:task_manager_app/constants/widgets/task_container.dart';
 import 'package:task_manager_app/features/home/services/home_service.dart';
@@ -78,8 +81,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 .getAllTasks(context.read<UserProvider>().username, context);
           },
           child: (oddTasks.isEmpty && evenTasks.isEmpty)
-              ? const Center(
-                  child: Text('Empty'),
+              ? Center(
+                  child: Text(
+                    emptyStrings[Random().nextInt(emptyStrings.length)],
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 )
               : Padding(
                   padding: const EdgeInsets.all(8.0),

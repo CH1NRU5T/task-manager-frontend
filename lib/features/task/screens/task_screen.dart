@@ -32,10 +32,17 @@ class _TaskScreenState extends State<TaskScreen> {
     super.dispose();
   }
 
+  _saveWithoutNotifying() {
+    if (widget.task.id.isNotEmpty) {
+      _taskService.updateTask(context, widget.task.id, _titleController.text,
+          _descriptionController.text, false);
+    }
+  }
+
   _save() {
     if (widget.task.id.isNotEmpty) {
       _taskService.updateTask(context, widget.task.id, _titleController.text,
-          _descriptionController.text);
+          _descriptionController.text, true);
     } else {
       _taskService.createTask(
           context: context,
@@ -73,13 +80,14 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
               onPressed: _save,
             ),
-            IconButton(
-              icon: const Icon(
-                Icons.delete_rounded,
-                color: Colors.black,
+            if (widget.task.id.isNotEmpty)
+              IconButton(
+                icon: const Icon(
+                  Icons.delete_rounded,
+                  color: Colors.black,
+                ),
+                onPressed: _delete,
               ),
-              onPressed: _delete,
-            ),
           ],
         ),
         body: Padding(
@@ -88,6 +96,7 @@ class _TaskScreenState extends State<TaskScreen> {
             Expanded(
               flex: 1,
               child: TaskTextFormField(
+                onChanged: _saveWithoutNotifying,
                 controller: _titleController,
                 label: 'Title',
                 desc: false,
@@ -96,6 +105,7 @@ class _TaskScreenState extends State<TaskScreen> {
             Expanded(
               flex: 16,
               child: TaskTextFormField(
+                onChanged: _saveWithoutNotifying,
                 controller: _descriptionController,
                 label: 'Description',
                 desc: true,
