@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-const String baseUrl = 'http://192.168.1.15:3000';
+const String baseUrl = 'https://task-manager-backend-78dz.onrender.com';
 Color backgroundColor = const Color(0xff211b1a);
 Color fabColor = const Color(0xff372b2c);
 Color textColor = const Color(0xffece1e0);
