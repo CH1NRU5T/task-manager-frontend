@@ -36,7 +36,10 @@ class _TaskScreenState extends State<TaskScreen> {
         _descriptionController.text);
   }
 
-  _delete() {}
+  _delete() {
+    _taskService.deleteTask(context, widget.task.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
