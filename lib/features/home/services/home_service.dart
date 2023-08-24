@@ -7,7 +7,7 @@ import 'package:task_manager_app/models/task.dart';
 import 'package:task_manager_app/providers/task_provider.dart';
 
 class HomeService {
-  getAllTasks(String username, BuildContext context) async {
+  void getAllTasks(String username, BuildContext context) async {
     (String?, dynamic) response =
         await getRequest('$baseUrl/getAllTasks/$username');
     if (response.$1 == null) {
@@ -16,10 +16,11 @@ class HomeService {
         int counter = 1;
         Map<String, dynamic> data = response.$2 as Map<String, dynamic>;
         List<Task> tasks = data['message'].map<Task>((e) {
-          Map<String, dynamic> map = e as Map<String, dynamic>;
-          map.addAll({'counter': counter++});
-          return Task.fromMap(map);
+          return Task.fromMap(e);
         }).toList();
+        for (Task task in tasks) {
+          task.counter = counter++;
+        }
         context.read<TaskProvider>().tasks = tasks;
       }
     } else {

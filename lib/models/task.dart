@@ -5,16 +5,16 @@ class Task {
   String title;
   String description;
   String id;
-  String createdAt;
-  String updatedAt;
-  int counter;
+  String? createdAt;
+  String? updatedAt;
+  int? counter;
   Task({
     required this.title,
     required this.description,
     required this.id,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.counter,
+    this.createdAt,
+    this.updatedAt,
+    this.counter,
   });
 
   Task copyWith({
@@ -53,7 +53,6 @@ class Task {
       id: map['_id'] as String,
       createdAt: map['createdAt'] as String,
       updatedAt: map['updatedAt'] as String,
-      counter: map['counter'] as int,
     );
   }
 

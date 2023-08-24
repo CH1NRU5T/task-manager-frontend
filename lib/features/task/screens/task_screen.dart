@@ -32,8 +32,15 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   _save() {
-    _taskService.updateTask(context, widget.task.id, _titleController.text,
-        _descriptionController.text);
+    if (widget.task.id.isNotEmpty) {
+      _taskService.updateTask(context, widget.task.id, _titleController.text,
+          _descriptionController.text);
+    } else {
+      _taskService.createTask(
+          context: context,
+          title: _titleController.text,
+          description: _descriptionController.text);
+    }
   }
 
   _delete() {
