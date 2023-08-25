@@ -16,6 +16,9 @@ class TaskProvider extends ChangeNotifier {
 
   removeTaskById(String id) {
     int index = _tasks.indexWhere((task) => task.id == id);
+    for (int i = index + 1; i < _tasks.length; i++) {
+      _tasks[i].counter = _tasks[i].counter! - 1;
+    }
     removeTask(index);
   }
 

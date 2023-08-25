@@ -83,7 +83,6 @@ class _HomeScreenState extends State<HomeScreen> {
               tooltip: 'Logout',
               icon: const Icon(
                 Icons.logout_rounded,
-                // color: Colors.black,
               ),
               onPressed: _logout,
             ),
